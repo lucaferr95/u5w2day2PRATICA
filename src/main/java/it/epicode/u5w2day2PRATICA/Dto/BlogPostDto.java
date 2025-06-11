@@ -9,4 +9,5 @@ public class BlogPostDto {
     private String cover;
     private String contenuto;
     private int tempoDiLettura;
+    private int autoreId;
 }

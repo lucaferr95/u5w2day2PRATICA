@@ -1,9 +1,11 @@
 package it.epicode.u5w2day2PRATICA.Controller;
 
+import it.epicode.u5w2day2PRATICA.Dto.BlogPostDto;
 import it.epicode.u5w2day2PRATICA.Exception.NotFoundException;
 import it.epicode.u5w2day2PRATICA.Model.BlogPost;
 import it.epicode.u5w2day2PRATICA.Service.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +20,15 @@ public class BlogPostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BlogPost saveBlogPost(@RequestBody BlogPost blogPost) {
-        return blogPostService.saveBlogPost(blogPost);
+    public BlogPost saveBlogPost(@RequestBody BlogPostDto blogPostDto) throws NotFoundException {
+        return blogPostService.saveBlogPost(blogPostDto);
     }
 
     @GetMapping
-    public List<BlogPost> getAllBlogPosts() {
-        return blogPostService.getBlogPosts();
+    public Page<BlogPost> getAllBlogPosts(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size,
+                                          @RequestParam(defaultValue = "id")String sortBy) {
+        return blogPostService.GetAllBlogPosts(page, size, sortBy);
     }
 
     @GetMapping("/{id}")
@@ -33,8 +37,8 @@ public class BlogPostController {
     }
 
     @PutMapping("/{id}")
-    public BlogPost updateBlogPost(@PathVariable int id, @RequestBody BlogPost blogPost) throws NotFoundException {
-        return blogPostService.updateBlogPost(id, blogPost);
+    public BlogPost updateBlogPost(@PathVariable int id, @RequestBody BlogPostDto blogPostDto) throws NotFoundException {
+        return blogPostService.updateBlogPost(id, blogPostDto);
     }
 
     @DeleteMapping("/{id}")

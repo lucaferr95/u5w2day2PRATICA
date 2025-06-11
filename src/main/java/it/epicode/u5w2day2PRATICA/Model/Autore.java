@@ -17,9 +17,7 @@ public class Autore {
     private LocalDate dataNascita;
     private String avatar;
 
-    @OneToOne
-    @JoinColumn(name = "blogpost_id")
-    private BlogPost blogPost;
+
 }
 
 
